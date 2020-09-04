@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity
                                      public void run() {
 
                                          message = BtInterface.btSignalled; // change the signaling message to be the received bt data e.g. sonars
+                                         // problem is we are only sampling this once per second so missing many of the sonar states!!!
                                          if (message != null)  sendMessage(); // send the received bt data over signalling
                                          BtInterface.btSignalled = ""; //clear this
 
@@ -153,7 +154,7 @@ public class MainActivity extends AppCompatActivity
 
                          },
                 // Set how long before to start calling the TimerTask (in milliseconds)
-                0,(1000));} // timer milliseconds. ok at 1sec, flaky at .5
+                0,(100));} // timer milliseconds. ok at 1sec, flaky at .5
 
 
     //This handler listens to messages from the bluetooth interface and adds them to the log
