@@ -102,8 +102,8 @@ public class BtInterface {
 		new Thread() {
 			@SuppressLint("NewApi")
 			@Override public void run() {
-				
 
+				if (socket != null) { // catch null pointer crash
 				
 				try {
 					socket.connect();
@@ -114,11 +114,11 @@ public class BtInterface {
 	                
 					receiverThread.start();
 					
-				} 
+				}
 				catch (IOException e) {
 					Log.v("N", "Connection Failed : "+e.getMessage());
 					e.printStackTrace();
-				}
+				}}
 				
 			}
 		}.start();
