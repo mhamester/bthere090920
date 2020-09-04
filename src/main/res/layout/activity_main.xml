@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    tools:context="com.tokbox.android.tutorials.basic_video_chat.MainActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        tools:context=".MainActivity">
+
+
+        <Button
+            android:id="@+id/leftProx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="Left" />
+
+        <Button
+            android:id="@+id/midProx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Middle" />
+
+        <Button
+            android:id="@+id/rightProx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Right" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/subscriber_container"
+        android:layout_width="600dp"
+        android:layout_height="320dp"
+        android:layout_gravity="top|center" />
+
+
+    <FrameLayout
+        android:id="@+id/publisher_container"
+        android:layout_width="600dp"
+        android:layout_height="260dp"
+        android:background="@color/publisher_border_color"
+        android:padding="@dimen/publisher_padding" />
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <com.tokbox.android.tutorials.basic_video_chat.Joystick
+            android:id="@+id/joystick"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_margin="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/bg_base"
+            start_on_first_touch="true"
+            force_square="true"
+            motion_constraint="None"
+            ignore="MissingClass">
+
+            <Button
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_stick" />
+
+
+        </com.tokbox.android.tutorials.basic_video_chat.Joystick>
+
+        <com.tokbox.android.tutorials.basic_video_chat.Joystick
+            android:id="@+id/bugview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/joystick"
+            tools:ignore="MissingClass" />
+
+        <TextView style="@style/TextAppearance.AppCompat.Caption"
+            android:id="@+id/tv_angle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_below="@id/bugview" />
+
+        <TextView style="@style/TextAppearance.AppCompat.Caption"
+            android:id="@+id/tv_offset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_below="@id/bugview"
+            android:layout_alignParentRight="true" />
+
+        <Button
+            android:id="@+id/play_sound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="Beep"
+            android:textSize="12dp" />
+
+        <Button
+            android:scaleType="center"
+            android:id="@+id/toggle_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:text="Light"
+            android:textSize="12dp" />
+
+        <Button
+            android:text="Blue Tooth Connect"
+            android:id="@+id/connect"
+            android:textSize="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:text="Rear"
+            android:id="@+id/rearProx"
+            android:textSize="14dp"
+            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"/>
+
+        <ToggleButton
+            android:text="Toggle Audio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/connect"
+            android:id="@+id/toggleAudio"
+            android:layout_weight="1"
+            android:textOff="Audio On"
+            android:textOn="Audio Off"
+            android:checked="true" />
+
+        <TextView
+            android:id="@+id/logview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/joystick"
+            android:layout_alignParentBottom="true"
+            android:bufferType="editable"
+            android:text="Bluetooth Status is shown here"
+            android:textSize="14dp"
+            tools:ignore="UnknownId" />
+    </RelativeLayout>
+
+</LinearLayout>
