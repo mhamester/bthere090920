@@ -701,8 +701,12 @@ public class MainActivity extends AppCompatActivity
 
             if (data.contains("battery")){
 
-                BatteryBar.setProgress(50);
-                BatteryText.setText("Battery Low");
+                String BattValStr=data.substring(8);
+                double BatVal = Double.parseDouble(BattValStr);
+                double BatValDoublePercent = (BatVal/13.8)*100;
+                BatteryBar.setProgress((int) BatValDoublePercent);
+                String BatValDoubleStr=Double.toString(BatVal);
+                BatteryText.setText(("Battery Volts ")+(BatValDoubleStr.substring(0,5)));
 
             }
 
