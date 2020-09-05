@@ -24,6 +24,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import java.util.Timer;
 import java.util.TimerTask;
+import android.widget.ProgressBar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -94,6 +95,8 @@ public class MainActivity extends AppCompatActivity
     private BtInterface bt = null;
     private boolean btremoteconnected;
     private TextView logview;
+    private ProgressBar BatteryBar;
+    private TextView BatteryText;
     public static String message=null; // made static so can be referenced from BtInterface
     public static final String SIGNAL_TYPE = "text-signal";
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -142,7 +145,6 @@ public class MainActivity extends AppCompatActivity
                                      public void run() {
 
                                          message = BtInterface.btSignalled; // change the signaling message to be the received bt data e.g. sonars
-                                         // problem is we are only sampling this once per second so missing many of the sonar states!!!
                                          if (message != null)  sendMessage(); // send the received bt data over signalling
                                          BtInterface.btSignalled = ""; //clear this
 
@@ -251,7 +253,8 @@ public class MainActivity extends AppCompatActivity
 
         final TextView angleView = (TextView) findViewById(R.id.tv_angle);
         final TextView offsetView = (TextView) findViewById(R.id.tv_offset);
-
+        BatteryText = findViewById(R.id.BatteryText);
+        BatteryBar = findViewById(R.id.BatteryBar);
 
         final String angleNoneString = getString(R.string.angle_value_none);
         final String angleValueString = getString(R.string.angle_value);
@@ -640,9 +643,9 @@ public class MainActivity extends AppCompatActivity
 
             mSession.sendSignal(SIGNAL_TYPE, message);
         }
-    else Toast.makeText(MainActivity.this,
+    /*else Toast.makeText(MainActivity.this,
             "Not Connected",
-            Toast.LENGTH_SHORT).show();
+            Toast.LENGTH_SHORT).show();*/
     }
 
 
@@ -696,43 +699,25 @@ public class MainActivity extends AppCompatActivity
 
             }
 
-            /*if (RU == 255) {
-                rightProx.setBackgroundColor(Color.RED);
+            if (data.contains("battery")){
+
+                BatteryBar.setProgress(50);
+                BatteryText.setText("Battery Low");
+
             }
-            if (RU == 0)  {
-                rightProx.setBackgroundColor(Color.GREEN);
-            }
-            if (LU == 255) {
-                leftProx.setBackgroundColor(Color.RED);
-            }
-            if (LU == 0)  {
-                leftProx.setBackgroundColor(Color.GREEN);
-            }
-            if (CU == 255) {
-                midProx.setBackgroundColor(Color.RED);
-            }
-            if (CU == 0)  {
-                midProx.setBackgroundColor(Color.GREEN);
-            }
-            if (BU == 255) {
-                rearProx.setBackgroundColor(Color.RED);
-            }
-            if (BU == 0)  {
-                rearProx.setBackgroundColor(Color.GREEN);
-            }*/
 
             if (data.equals("btConnect")) {
                 bt.connect();
 
-               Toast.makeText(MainActivity.this,
+              /* Toast.makeText(MainActivity.this,
                         "trying to connect BT via remote " + data,
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_LONG).show();*/
             }
 
             if (data.equals("btAttached")){
                 logview.append("Bluetooth is connected" + "\n");
                 btremoteconnected = true; //flag to ind remote systems bt is connected
-
+                connect.setText("BT CONNECTED");//update the local button text
             }
             // Log.d(LOG_TAG, "send to bthere before check.. " + data);
             // if (btremoteconnected == true) { //only send bt data to bt interface if it is connected
@@ -757,14 +742,16 @@ public class MainActivity extends AppCompatActivity
         if(v == connect) {
             Log.d(LOG_TAG, "Trying to connect BT");
             message="btConnect";
-            sendMessage();
-            bt.connect(); //allows remote to connect this device to arduino bt
+            sendMessage(); //allows remote end user to connect bthere end device to arduino bt
+            bt.connect(); // connect the bluetooth
 
             if(BtInterface.btconnected == 1){
               //  connect.setEnabled(false);
+                connect.setText("BT CONNECTED");//update the button text
                 message="btAttached";
-                sendMessage();
+                sendMessage(); // send connected message over signalling to the far end
             }
+
         }
         else if(v == forwardArrow) {
             //addToLog("Move Forward");

@@ -113,19 +113,19 @@ public class BtInterface {
 	                handlerStatus.sendMessage(msg);
 	                
 					receiverThread.start();
-					
+
 				}
 				catch (IOException e) {
 					Log.v("N", "Connection Failed : "+e.getMessage());
 					e.printStackTrace();
 				}}
-				
+				btconnected = 1; //flag for btconnected button check
+
 			}
+
 		}.start();
-		
-	
-	 btconnected = 1;
-	}
+
+	 }
 	
 	//properly closing the socket and updating the status
 	public void close() {

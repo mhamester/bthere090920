@@ -113,10 +113,32 @@
             android:id="@+id/toggle_light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/toggleAudio"
             android:layout_alignParentLeft="true"
             android:text="Light"
             android:textSize="12dp" />
+        <ProgressBar
+            android:id="@+id/BatteryBar"
+            android:layout_below="@+id/toggle_light"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:minHeight="40dp"
+            android:minWidth="180dp"
+            android:max="100"
+            android:progress="0"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+        <TextView
+            android:background="#00000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/BatteryText"
+            android:layout_alignLeft="@+id/BatteryBar"
+            android:layout_alignTop="@+id/BatteryBar"
+            android:layout_alignRight="@+id/BatteryBar"
+            android:layout_alignBottom="@+id/BatteryBar" />
+
 
         <Button
             android:text="Blue Tooth Connect"
@@ -141,8 +163,8 @@
             android:layout_below="@+id/connect"
             android:id="@+id/toggleAudio"
             android:layout_weight="1"
-            android:textOff="Audio On"
-            android:textOn="Audio Off"
+            android:textOff="Unmute"
+            android:textOn="Mute"
             android:checked="true" />
 
         <TextView
@@ -152,7 +174,7 @@
             android:layout_toRightOf="@+id/joystick"
             android:layout_alignParentBottom="true"
             android:bufferType="editable"
-            android:text="Bluetooth Status is shown here"
+            android:text="Logging is shown here"
             android:textSize="14dp"
             tools:ignore="UnknownId" />
     </RelativeLayout>
