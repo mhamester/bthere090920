@@ -736,7 +736,14 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        }}
+        }
+               if ((data.contains("play"))) {
+                    bt.sendData(data);
+             }
+
+
+
+        }
     }
 
 
@@ -767,6 +774,12 @@ public class MainActivity extends AppCompatActivity
              message="stop";
              sendMessage();
         }
+        else if(v == play_sound) {
+            //addToLog("Play Sound");
+            message="play 1";
+            sendMessage();
+        }
+
         else if(v == backArrow) {
             //addToLog("Move back");
              message="back";
