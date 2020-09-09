@@ -732,6 +732,7 @@ public class MainActivity extends AppCompatActivity
                 if  (delay == 5) { // send only once every n times so as to not drop bt traffic
                     bt.sendData(data);
                     delay = 0;
+                    //data = "";
                 }
 
 
@@ -739,6 +740,7 @@ public class MainActivity extends AppCompatActivity
         }
                if ((data.contains("play"))) {
                     bt.sendData(data);
+                    //data = "";
              }
 
 
