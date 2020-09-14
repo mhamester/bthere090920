@@ -711,6 +711,8 @@ public class MainActivity extends AppCompatActivity
             }
 
             if (data.equals("btConnect")) {
+
+                logview.append("Attempting BT Conn" + "\n");
                 bt.connect();
 
               /* Toast.makeText(MainActivity.this,
