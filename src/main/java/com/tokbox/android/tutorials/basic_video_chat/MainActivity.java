@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -97,13 +98,14 @@ public class MainActivity extends AppCompatActivity
     private TextView logview;
     private ProgressBar BatteryBar;
     private TextView BatteryText;
+    private EditText roomNameText;
     public static String message=null; // made static so can be referenced from BtInterface
     public static final String SIGNAL_TYPE = "text-signal";
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int RC_SETTINGS_SCREEN_PERM = 123;
     private static final int RC_VIDEO_APP_PERM = 124;
     //define buttons
-    private Button connect, toggle_light, play_sound, leftProx, midProx, rightProx, rearProx;
+    private Button connect, toggle_light, play_sound, leftProx, midProx, rightProx, rearProx, otConnect, otDisConnect;
     private ImageView forwardArrow, backArrow, rightArrow, leftArrow, stop;
     // Suppressing this warning. mWebServiceCoordinator will get GarbageCollected if it is local.
     @SuppressWarnings("FieldCanBeLocal")
@@ -203,7 +205,8 @@ public class MainActivity extends AppCompatActivity
     public void fetchSessionConnectionData() {
         RequestQueue reqQueue = Volley.newRequestQueue(this);
         reqQueue.add(new JsonObjectRequest(Request.Method.GET,
-                "https://b-there.herokuapp.com" + "/session",
+                //"https://b-there.herokuapp.com" + "/session",
+                "https://b-there.herokuapp.com" + "//room/" + roomNameText.getText(),
                 null, new Response.Listener<JSONObject>() {
 
             @Override
@@ -264,13 +267,17 @@ public class MainActivity extends AppCompatActivity
         logview = (TextView)findViewById(R.id.logview);
         //I chose to display only the last 3 messages
         logArray = new String[3];
-
+        roomNameText = (EditText)findViewById(R.id.roomName);
+        otConnect = (Button) findViewById(R.id.otConnect);
+        otDisConnect = (Button) findViewById(R.id.otDisConnect);
         leftProx = (Button) findViewById(R.id.leftProx);
         rightProx = (Button) findViewById(R.id.rightProx);
         midProx = (Button) findViewById(R.id.midProx);
         rearProx = (Button) findViewById(R.id.rearProx);
         connect = (Button) findViewById(R.id.connect);
         connect.setOnClickListener(this);
+        otConnect.setOnClickListener(this);
+        otDisConnect.setOnClickListener(this);
 
         final ToggleButton toggleAudio = (ToggleButton) findViewById(R.id.toggleAudio);
         toggleAudio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -469,13 +476,15 @@ public class MainActivity extends AppCompatActivity
             mSubscriberViewContainer = (FrameLayout) findViewById(R.id.subscriber_container);
 
             // initialize and connect to the session
-            fetchSessionConnectionData();
+           // fetchSessionConnectionData();
 
         } else {
             EasyPermissions.requestPermissions(this, "This app needs access to your camera and mic to make video calls", RC_VIDEO_APP_PERM, perms);
         }
     }
-
+    private void startOtSession(){
+        fetchSessionConnectionData();
+    }
 
     private void initializeSession(String apiKey, String sessionId, String token) {
 
@@ -752,7 +761,16 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    public void onClick(View v) {
+        public void onClick(View v) {
+        if(v == otConnect) {
+            Log.d(LOG_TAG, "Trying to connect Opentok");
+            startOtSession(); //connect to OpenTok
+        }
+
+        if(v == otDisConnect) {
+             Log.d(LOG_TAG, "Trying to Disconnect Opentok");
+            mSession.disconnect();
+        }
 
         if(v == connect) {
             Log.d(LOG_TAG, "Trying to connect BT");
@@ -768,6 +786,7 @@ public class MainActivity extends AppCompatActivity
             }
 
         }
+
         else if(v == forwardArrow) {
             //addToLog("Move Forward");
             message="forward";

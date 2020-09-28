@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
 
     android:orientation="vertical"
     tools:context="com.tokbox.android.tutorials.basic_video_chat.MainActivity">
@@ -38,14 +40,14 @@
     <FrameLayout
         android:id="@+id/subscriber_container"
         android:layout_width="600dp"
-        android:layout_height="320dp"
+        android:layout_height="380dp"
         android:layout_gravity="top|center" />
 
 
     <FrameLayout
         android:id="@+id/publisher_container"
         android:layout_width="600dp"
-        android:layout_height="260dp"
+        android:layout_height="200dp"
         android:background="@color/publisher_border_color"
         android:padding="@dimen/publisher_padding" />
 
@@ -103,10 +105,37 @@
             android:id="@+id/play_sound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/toggle_light"
+            android:layout_below="@+id/connect"
             android:text="Beep"
             android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/otDisConnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/otConnect"
+            android:text="DISCONNECT"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/otConnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="CONNECT"
+            android:textSize="12dp" />
+
+        <EditText
+            android:id="@+id/roomName"
+            android:layout_height="wrap_content"
+            android:layout_width="180dp"
+            android:layout_above="@+id/otConnect"
+            android:layout_alignParentRight="true"
+            android:text="Bthere"
+            android:inputType="text"/>
 
         <Button
             android:scaleType="center"
