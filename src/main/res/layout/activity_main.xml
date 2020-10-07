@@ -129,6 +129,15 @@
             android:textSize="12dp" />
 
         <EditText
+            android:id="@+id/textChat"
+            android:layout_height="wrap_content"
+            android:layout_width="180dp"
+            android:layout_above="@+id/roomName"
+            android:layout_alignParentRight="true"
+            android:text="Chat here"
+            android:inputType="text"/>
+
+        <EditText
             android:id="@+id/roomName"
             android:layout_height="wrap_content"
             android:layout_width="180dp"
@@ -146,6 +155,16 @@
             android:layout_alignParentLeft="true"
             android:text="Light"
             android:textSize="12dp" />
+        <Button
+            android:scaleType="center"
+            android:id="@+id/sndTxtMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/play_sound"
+            android:layout_toRightOf="@+id/toggle_light"
+            android:text="Snd Txt"
+            android:textSize="12dp" />
+
         <ProgressBar
             android:id="@+id/BatteryBar"
             android:layout_below="@+id/toggle_light"

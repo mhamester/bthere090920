@@ -64,7 +64,7 @@ public class BtInterface {
 	//when called from the main activity, it sets the connection with the remote device
 	public void connect() {
 		
-	//	if (btconnected == 1) return;
+		if (btconnected == 1) return;
 		
 		Set<BluetoothDevice> setpairedDevices = mBluetoothAdapter.getBondedDevices();
     	BluetoothDevice[] pairedDevices = (BluetoothDevice[]) setpairedDevices.toArray(new BluetoothDevice[setpairedDevices.size()]);

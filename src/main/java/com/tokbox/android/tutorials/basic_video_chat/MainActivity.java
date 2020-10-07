@@ -99,13 +99,15 @@ public class MainActivity extends AppCompatActivity
     private ProgressBar BatteryBar;
     private TextView BatteryText;
     private EditText roomNameText;
+    private EditText textChatText;
     public static String message=null; // made static so can be referenced from BtInterface
-    public static final String SIGNAL_TYPE = "text-signal";
+    public static final String SIGNAL_TYPE = "text-signal"; // this is for bthere signalling data
+    public static final String MSG_TYPE = "msg"; // this is for text chat
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int RC_SETTINGS_SCREEN_PERM = 123;
     private static final int RC_VIDEO_APP_PERM = 124;
     //define buttons
-    private Button connect, toggle_light, play_sound, leftProx, midProx, rightProx, rearProx, otConnect, otDisConnect;
+    private Button connect, toggle_light, play_sound, leftProx, midProx, rightProx, rearProx, otConnect, otDisConnect, sndTxtMsg;
     private ImageView forwardArrow, backArrow, rightArrow, leftArrow, stop;
     // Suppressing this warning. mWebServiceCoordinator will get GarbageCollected if it is local.
     @SuppressWarnings("FieldCanBeLocal")
@@ -268,6 +270,7 @@ public class MainActivity extends AppCompatActivity
         //I chose to display only the last 3 messages
         logArray = new String[3];
         roomNameText = (EditText)findViewById(R.id.roomName);
+        textChatText = (EditText)findViewById(R.id.textChat);
         otConnect = (Button) findViewById(R.id.otConnect);
         otDisConnect = (Button) findViewById(R.id.otDisConnect);
         leftProx = (Button) findViewById(R.id.leftProx);
@@ -275,9 +278,11 @@ public class MainActivity extends AppCompatActivity
         midProx = (Button) findViewById(R.id.midProx);
         rearProx = (Button) findViewById(R.id.rearProx);
         connect = (Button) findViewById(R.id.connect);
+        sndTxtMsg = (Button) findViewById(R.id.sndTxtMsg);
         connect.setOnClickListener(this);
         otConnect.setOnClickListener(this);
         otDisConnect.setOnClickListener(this);
+        sndTxtMsg.setOnClickListener(this);
 
         final ToggleButton toggleAudio = (ToggleButton) findViewById(R.id.toggleAudio);
         toggleAudio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -645,7 +650,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    private void sendMessage() {
+    private void sendMessage() { //for sending signaling
     if (connected) {
             Log.d(LOG_TAG, "Send Message");
             //   mSession.sendSignal("", "Hello, Signaling!");
@@ -657,6 +662,17 @@ public class MainActivity extends AppCompatActivity
             Toast.LENGTH_SHORT).show();*/
     }
 
+    private void sendTxtMessage() { //for sending chat message
+        if (connected) {
+            Log.d(LOG_TAG, "Send Chat Message");
+            //   mSession.sendSignal("", "Hello, Signaling!");
+
+            mSession.sendSignal(MSG_TYPE, message);
+        }
+    /*else Toast.makeText(MainActivity.this,
+            "Not Connected",
+            Toast.LENGTH_SHORT).show();*/
+    }
 
     @Override
     public void onSignalReceived(Session session, String type, String data, Connection connection) { //opentok signaling reception
@@ -757,6 +773,10 @@ public class MainActivity extends AppCompatActivity
 
 
         }
+
+        if (type != null && type.equals(MSG_TYPE)) { //receiving chat message
+            textChatText.setText (data); //set text value on text dialog
+        }
     }
 
 
@@ -803,20 +823,10 @@ public class MainActivity extends AppCompatActivity
             sendMessage();
         }
 
-        else if(v == backArrow) {
-            //addToLog("Move back");
-             message="back";
-             sendMessage();
-        }
-        else if(v == rightArrow) {
-            //addToLog("Turn Right");
-             message="right";
-             sendMessage();
-        }
-        else if(v == leftArrow) {
-            //addToLog("Turn left");
-             message="left";
-             sendMessage();
+        else if(v == sndTxtMsg) {
+            //addToLog("send text message");
+            message= String.valueOf(textChatText.getText());
+            sendTxtMessage();
         }
        // else if(v == leftProx) {
        //     addToLog("left prox");
