@@ -761,10 +761,18 @@ public class MainActivity extends AppCompatActivity
                     delay = 0;
                     //data = "";
                 }
-
-
-
         }
+
+            if ((data.contains("tlt"))) { // only send bt data to bthere if contains tlt - handle tilt drive
+                //send to bluetooth on Bthere
+                //  Log.d(LOG_TAG, "send to bthere.. " + data);
+               // delay = delay + 1;
+               // if  (delay == 5) { // send only once every n times so as to not drop bt traffic
+                    bt.sendData(data);
+               //     delay = 0;
+                    //data = "";
+               // }
+            }
                if ((data.contains("play"))) {
                     bt.sendData(data);
                     //data = "";
